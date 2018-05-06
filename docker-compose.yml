@@ -1,0 +1,10 @@
+version: '2.2'
+services:
+    account:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      container_name: account
+      image: account
+      ports:
+        - "8080:8080"

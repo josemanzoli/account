@@ -1,4 +1,4 @@
 insert into account
-values(1, 1000,1000);
+values(1, 5000,5000);
 insert into account
-values(2, 2000,2000);
+values(2, 10000,10000);
