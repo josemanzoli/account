@@ -1,6 +1,6 @@
 <configuration scan="true">
 
-    <property name="LOGS_PATH" value="/var/log/account" />
+    <property name="LOGS_PATH" value="./log" />
 
     <appender name="ACCOUNT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -31,13 +31,12 @@
 
     <logger name="com.manza" additivity="false">
         <level value="DEBUG" />
-        <appender-ref ref="ACCOUNT" />
         <appender-ref ref="console" />
     </logger>
 
     <logger name="org.springframework" additivity="false">
         <level value="INFO" />
-        <appender-ref ref="console" />
+        <appender-ref ref="ACCOUNT" />
     </logger>
 
     <root level="INFO">

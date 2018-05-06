@@ -1,7 +1,5 @@
 FROM java:8
 
-RUN mkdir -p /var/log/account
-
 RUN mkdir -p /manza/app/account
 
 WORKDIR /manza/app/account

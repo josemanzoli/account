@@ -39,7 +39,10 @@ public class AccountsServiceImpl implements AccountsService {
         try {
              return accountRepository.findAll()
                     .stream()
-                    .map(account -> modelMapper.map(account, AccountDto.class))
+                    .map(account -> {
+                        LOGGER.debug("Converting account: {} to AccountDto", account);
+                        return modelMapper.map(account, AccountDto.class);
+                    })
                     .collect(Collectors.toList());
         } catch (MappingException me) {
             LOGGER.error("Could not apply ModelMapper to AccountDto. Exception : {}", me.getMessage());
