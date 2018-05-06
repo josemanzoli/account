@@ -6,6 +6,7 @@ import com.manza.accounts.model.Account;
 import com.manza.accounts.service.AccountsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -55,5 +56,22 @@ public class AccountsControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/accounts/limits").accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo(result)));
+    }
+
+    @Test
+    public void shouldReturnEmptyAccountList() throws Exception {
+        when(accountsService.findAll()).thenReturn(new ArrayList<>());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/accounts/limits").accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isNoContent())
+                .andExpect(content().string(equalTo("[]")));
+    }
+
+    @Test
+    public void shouldThrowException () throws Exception {
+        when(accountsService.findAll()).thenThrow(new MappingException(new ArrayList<>()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/accounts/limits").accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isInternalServerError());
     }
 }
