@@ -27,6 +27,12 @@ public class Account {
         this.availableWithdrawalLimit = availableWithdrawalLimit;
     }
 
+    public Account(Long accountId, BigDecimal availableCreditLimit, BigDecimal availableWithdrawalLimit) {
+        this.accountId = accountId;
+        this.availableCreditLimit = availableCreditLimit;
+        this.availableWithdrawalLimit = availableWithdrawalLimit;
+    }
+
     public Long getAccountId() {
         return accountId;
     }
