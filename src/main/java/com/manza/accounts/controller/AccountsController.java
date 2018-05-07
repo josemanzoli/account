@@ -1,8 +1,11 @@
 package com.manza.accounts.controller;
 
+import com.manza.accounts.exception.AccountNotFoundException;
 import com.manza.accounts.dto.AccountDto;
 import com.manza.accounts.service.AccountsService;
 import org.modelmapper.MappingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,13 +18,20 @@ import java.util.List;
 @RequestMapping("/v1/accounts")
 public class AccountsController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountsController.class);
+
     @Autowired
     private AccountsService accountsService;
 
     @PatchMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public AccountDto patch(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public ResponseEntity<AccountDto> patch(@PathVariable Long id, @RequestBody AccountDto accountDto) {
         accountDto.setId(id);
-        return accountsService.patch(accountDto);
+        try {
+            return new ResponseEntity<>(accountsService.patch(accountDto), HttpStatus.OK);
+        } catch (AccountNotFoundException ae) {
+            LOGGER.info(ae.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(path = "/limits", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

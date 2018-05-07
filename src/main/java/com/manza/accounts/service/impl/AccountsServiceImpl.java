@@ -1,5 +1,6 @@
 package com.manza.accounts.service.impl;
 
+import com.manza.accounts.exception.AccountNotFoundException;
 import com.manza.accounts.dto.AccountDto;
 import com.manza.accounts.model.Account;
 import com.manza.accounts.repository.AccountRepository;
@@ -25,8 +26,9 @@ public class AccountsServiceImpl implements AccountsService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public AccountDto patch(AccountDto accountDto) {
-        Account account = accountRepository.findByAccountId(accountDto.getId()).orElse(new Account());
+    public AccountDto patch(AccountDto accountDto) throws AccountNotFoundException {
+        Account account = accountRepository.findByAccountId(accountDto.getId())
+                .orElseThrow(() -> new AccountNotFoundException("Account" + accountDto.getId().toString() + " was not found" ));
 
         account.setAvailableCreditLimit(account.getAvailableCreditLimit().add(accountDto.getAvailableCreditLimit()));
         account.setAvailableWithdrawalLimit(account.getAvailableWithdrawalLimit().add(accountDto.getAvailableWithdrawalLimit()));
