@@ -8,5 +8,5 @@ import java.util.List;
 public interface AccountsService {
 
     AccountDto patch(AccountDto accountDto) throws AccountNotFoundException;
-    List<AccountDto> findAll();
+    List<AccountDto> findAll() throws Exception;
 }

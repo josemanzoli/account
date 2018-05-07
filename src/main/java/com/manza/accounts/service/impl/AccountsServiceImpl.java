@@ -37,7 +37,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public List<AccountDto> findAll() throws MappingException {
+    public List<AccountDto> findAll() throws Exception {
         try {
              return accountRepository.findAll()
                     .stream()
@@ -46,9 +46,9 @@ public class AccountsServiceImpl implements AccountsService {
                         return modelMapper.map(account, AccountDto.class);
                     })
                     .collect(Collectors.toList());
-        } catch (MappingException me) {
-            LOGGER.error("Could not apply ModelMapper to AccountDto. Exception : {}", me.getMessage());
-            throw me;
+        } catch (Exception e) {
+            LOGGER.error("Could not map Account to AccountDto. Exception : {}", e.getMessage());
+            throw e;
         }
     }
 }

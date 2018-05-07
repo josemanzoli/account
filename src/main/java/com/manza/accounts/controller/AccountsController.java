@@ -1,9 +1,8 @@
 package com.manza.accounts.controller;
 
-import com.manza.accounts.exception.AccountNotFoundException;
 import com.manza.accounts.dto.AccountDto;
+import com.manza.accounts.exception.AccountNotFoundException;
 import com.manza.accounts.service.AccountsService;
-import org.modelmapper.MappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class AccountsController {
             } else {
                 return new ResponseEntity<>(accounts, HttpStatus.NO_CONTENT);
             }
-        } catch (MappingException me) {
+        } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

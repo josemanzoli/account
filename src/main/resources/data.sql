@@ -1,3 +1,4 @@
+truncate table account;
 insert into account
 values(1, 5000,5000);
 insert into account
