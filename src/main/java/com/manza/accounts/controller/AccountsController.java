@@ -47,4 +47,16 @@ public class AccountsController {
         }
 
     }
+
+    @GetMapping(path = "/limit/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AccountDto> get(@PathVariable Long id){
+        try {
+            AccountDto accountDto = accountsService.findByAccountId(id);
+            return new ResponseEntity<>(accountDto, HttpStatus.OK);
+        } catch (AccountNotFoundException ae) {
+            LOGGER.info(ae.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 }

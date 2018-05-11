@@ -9,4 +9,5 @@ public interface AccountsService {
 
     AccountDto patch(AccountDto accountDto) throws AccountNotFoundException;
     List<AccountDto> findAll() throws Exception;
+    AccountDto findByAccountId(Long id) throws AccountNotFoundException;
 }

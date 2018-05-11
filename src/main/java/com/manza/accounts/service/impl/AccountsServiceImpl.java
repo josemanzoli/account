@@ -51,4 +51,12 @@ public class AccountsServiceImpl implements AccountsService {
             throw e;
         }
     }
+
+    @Override
+    public AccountDto findByAccountId(Long id) throws AccountNotFoundException {
+        Account account = accountRepository.findByAccountId(id)
+                .orElseThrow(() -> new AccountNotFoundException("Account" + id.toString() + " was not found" ));
+
+        return modelMapper.map(account, AccountDto.class);
+    }
 }
